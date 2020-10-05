@@ -15,14 +15,14 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 365), "/");
 
 
 if (!isset($_COOKIE[$cookie_name])) {
-    echo "Cookie named '" . $cookie_name . "' is set!";
+     "Cookie named '" . $cookie_name . "' is not set!";
 } else {
-    echo "Cookie '" . $cookie_name . "' is set!<br>";
-    echo "Value is: " . $_COOKIE[$cookie_name];
-}
+     "Cookie '" . $cookie_name . "' is set!<br>";
+     "Value is: " . $_COOKIE[$cookie_name];
+}// todo make invisible on page
 
-
-function whatIsHappening() {
+function whatIsHappening()
+{
     echo '<h2>$_GET</h2>';
     var_dump($_GET);
     echo '<h2>$_POST</h2>';
@@ -33,41 +33,116 @@ function whatIsHappening() {
     var_dump($_SESSION);
 }
 
-//your products with their price.
-$products = [
-    ['name' => 'Club Ham', 'price' => 3.20],
-    ['name' => 'Club Cheese', 'price' => 3],
-    ['name' => 'Club Cheese & Ham', 'price' => 4],
-    ['name' => 'Club Chicken', 'price' => 4],
-    ['name' => 'Club Salmon', 'price' => 5]
-];
+//e-mail validation
+
+// define variables and set to empty values
+$email = $street = $streetNumber = $zipCode = $city = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = test_input($_POST["email"]);
+    $street = test_input($_POST["street"]);
+    $streetNumber = test_input($_POST["streetnumber"]);
+    $zipCode = test_input($_POST["zipcode"]);
+    $city = test_input($_POST["city"]);
+}
+function test_input($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+?>
+<form
+        method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+</form>
+<?php
+// define variables and set to empty values
+$streetErr = $emailErr = $streetNumberErr = $zipCodeErr = $cityErr = "";
+$street = $email = $streetNumber = $zipCode = $city = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST["email"])) {
+        $emailErr = "email is required";
+        echo $emailErr;//todo check and if it works do the same for other boxes
+    } else {
+        $email = test_input($_POST["email"]);
+    }
+
+    if (empty($_POST["street"])) {
+        $streetErr = "street is required";
+    } else {
+        $street = test_input($_POST["street"]);
+    }
+
+    if (empty($_POST["streetnumber"])) {
+        $streetNumberErr = "";
+    } else {
+        $streetNumber = test_input($_POST["streetnumber"]);
+    }
+
+    if (empty($_POST["zipcode"])) {
+        $zipCodeErr = "";
+    } else {
+        $zipCode = test_input($_POST["zipcode"]);
+    }
+
+    if (empty($_POST["city"])) {
+        $cityErr = "city is required";
+    } else {
+        $city = test_input($_POST["city"]);
+    }
+}
+?>
+ADVERTISEMENT
 
 
-$products = [
-    ['name' => 'Cola', 'price' => 2],
-    ['name' => 'Fanta', 'price' => 2],
-    ['name' => 'Sprite', 'price' => 2],
-    ['name' => 'Ice-tea', 'price' => 3],
-];
 
-$totalValue = 0;
-
-/*<?php
-// todo Set session variables new page?? don't forget session function above page
-$_SESSION["favcolor"] = "green";
-$_SESSION["favanimal"] = "cat";
-echo "Session variables are set.";
-?>*/
-
-/* Both GET and POST create an array (e.g. array( key1 => value1, key2 => value2, key3 => value3, ...)). This array holds key/value pairs,
-where keys are the names of the form controls and values are the input data from the user.*/
-
-require 'form-view.php';
+<?php
+echo $email;
+echo $street;
+echo $streetNumber;
+echo $zipCode;
+echo $city;
+?>
 
 
 
+    <?php
+    //your products with their price.
+    $products = [
+        ['name' => 'Club Ham', 'price' => 3.20],
+        ['name' => 'Club Cheese', 'price' => 3],
+        ['name' => 'Club Cheese & Ham', 'price' => 4],
+        ['name' => 'Club Chicken', 'price' => 4],
+        ['name' => 'Club Salmon', 'price' => 5]
+    ];
 
 
+    $products = [
+        ['name' => 'Cola', 'price' => 2],
+        ['name' => 'Fanta', 'price' => 2],
+        ['name' => 'Sprite', 'price' => 2],
+        ['name' => 'Ice-tea', 'price' => 3],
+    ];
+    // todo difference between food and drinks
+
+    $totalValue = 0;
+    ?>
+    <?php
+    // todo Set session variables new page?? don't forget session function above page
+    $_SESSION["favcolor"] = "green";
+    $_SESSION["favanimal"] = "cat";
+    echo "Session variables are set.";
+
+
+
+/* Both GET and POST create an array (e.g. array( key1 => value1, key2 => value2, key3 => value3, ...)). This array
+holds key/value pairs,
+where keys are the names of the form controls and values are the input data from the user. */
 
 
 //index for all your logic
+
+    require 'form-view.php';
+    ?>
