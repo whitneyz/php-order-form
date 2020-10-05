@@ -15,10 +15,10 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 365), "/");
 
 
 if (!isset($_COOKIE[$cookie_name])) {
-     "Cookie named '" . $cookie_name . "' is not set!";
+    "Cookie named '" . $cookie_name . "' is not set!";
 } else {
-     "Cookie '" . $cookie_name . "' is set!<br>";
-     "Value is: " . $_COOKIE[$cookie_name];
+    "Cookie '" . $cookie_name . "' is set!<br>";
+    "Value is: " . $_COOKIE[$cookie_name];
 }// todo make invisible on page
 
 function whatIsHappening()
@@ -52,6 +52,7 @@ function test_input($data)
     $data = htmlspecialchars($data);
     return $data;
 }
+
 ?>
 <form
         method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
@@ -64,9 +65,11 @@ $street = $email = $streetNumber = $zipCode = $city = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["email"])) {
         $emailErr = "email is required";
-        echo $emailErr;//todo check and if it works do the same for other boxes
     } else {
         $email = test_input($_POST["email"]);
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $emailErr = "Invalid email format";
+        }// in form-view automatically the email error message what is applicable
     }
 
     if (empty($_POST["street"])) {
@@ -94,7 +97,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-ADVERTISEMENT
 
 
 
@@ -108,33 +110,32 @@ echo $city;
 
 
 
-    <?php
-    //your products with their price.
-    $products = [
-        ['name' => 'Club Ham', 'price' => 3.20],
-        ['name' => 'Club Cheese', 'price' => 3],
-        ['name' => 'Club Cheese & Ham', 'price' => 4],
-        ['name' => 'Club Chicken', 'price' => 4],
-        ['name' => 'Club Salmon', 'price' => 5]
-    ];
+<?php
+//your products with their price.
+$products = [
+    ['name' => 'Club Ham', 'price' => 3.20],
+    ['name' => 'Club Cheese', 'price' => 3],
+    ['name' => 'Club Cheese & Ham', 'price' => 4],
+    ['name' => 'Club Chicken', 'price' => 4],
+    ['name' => 'Club Salmon', 'price' => 5]
+];
 
 
-    $products = [
-        ['name' => 'Cola', 'price' => 2],
-        ['name' => 'Fanta', 'price' => 2],
-        ['name' => 'Sprite', 'price' => 2],
-        ['name' => 'Ice-tea', 'price' => 3],
-    ];
-    // todo difference between food and drinks
+$products = [
+    ['name' => 'Cola', 'price' => 2],
+    ['name' => 'Fanta', 'price' => 2],
+    ['name' => 'Sprite', 'price' => 2],
+    ['name' => 'Ice-tea', 'price' => 3],
+];
+// todo difference between food and drinks
 
-    $totalValue = 0;
-    ?>
-    <?php
-    // todo Set session variables new page?? don't forget session function above page
-    $_SESSION["favcolor"] = "green";
-    $_SESSION["favanimal"] = "cat";
-    echo "Session variables are set.";
-
+$totalValue = 0;
+?>
+<?php
+// todo Set session variables new page?? don't forget session function above page
+$_SESSION["favcolor"] = "green";
+$_SESSION["favanimal"] = "cat";
+echo "Session variables are set.";
 
 
 /* Both GET and POST create an array (e.g. array( key1 => value1, key2 => value2, key3 => value3, ...)). This array
@@ -144,5 +145,5 @@ where keys are the names of the form controls and values are the input data from
 
 //index for all your logic
 
-    require 'form-view.php';
-    ?>
+require 'form-view.php';
+?>
