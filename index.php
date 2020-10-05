@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $streetNumberErr = "streetnumber is required";
     } else {
         $streetNumber = test_input($_POST["streetnumber"]);
-        if (is_numeric($streetNumber)) {
+        if (!filter_var($streetNumber, FILTER_VALIDATE_INT)) {
             $streetNumberErr = "Please enter only numbers.";
         }
     }
@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $zipCodeErr = "zipcode is required";
     } else {
         $zipCode = test_input($_POST["zipcode"]);
-        if (is_numeric($zipCode)) {
+        if (!filter_var($zipCode, FILTER_VALIDATE_INT)) {
             $zipCodeErr = "Please enter only numbers.";
         }
     }
@@ -102,21 +102,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $city = test_input($_POST["city"]);
     }
 }
-?>
 
 
-
-<?php
-echo $email;
-echo $street;
-echo $streetNumber;
-echo $zipCode;
-echo $city;
-?>
-
-
-
-<?php
 //your products with their price.
 $products = [
     ['name' => 'Club Ham', 'price' => 3.20],
@@ -125,7 +112,6 @@ $products = [
     ['name' => 'Club Chicken', 'price' => 4],
     ['name' => 'Club Salmon', 'price' => 5]
 ];
-
 
 $products = [
     ['name' => 'Cola', 'price' => 2],
@@ -136,8 +122,8 @@ $products = [
 // todo difference between food and drinks
 
 $totalValue = 0;
-?>
-<?php
+
+
 // todo Set session variables new page?? don't forget session function above page
 $_SESSION["favcolor"] = "green";
 $_SESSION["favanimal"] = "cat";
