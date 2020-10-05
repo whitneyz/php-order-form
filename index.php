@@ -104,6 +104,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 
+
+
 //your products with their price.
 $products = [
     ['name' => 'Club Ham', 'price' => 3.20],
@@ -125,9 +127,11 @@ $totalValue = 0;
 
 
 // todo Set session variables new page?? don't forget session function above page
-$_SESSION["favcolor"] = "green";
-$_SESSION["favanimal"] = "cat";
-echo "Session variables are set.";
+$_SESSION["street"] = "";
+$_SESSION["streetnumber"] = "";
+$_SESSION["zipcode"] = "";
+$_SESSION["city"] = "";
+//echo "Session variables are set.";
 
 
 /* Both GET and POST create an array (e.g. array( key1 => value1, key2 => value2, key3 => value3, ...)). This array
