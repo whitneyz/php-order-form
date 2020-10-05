@@ -79,15 +79,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (empty($_POST["streetnumber"])) {
-        $streetNumberErr = "";
+        $streetNumberErr = "streetnumber is required";
     } else {
         $streetNumber = test_input($_POST["streetnumber"]);
+        if (is_numeric($streetNumber)) {
+            $streetNumberErr = "Please enter only numbers.";
+        }
     }
 
     if (empty($_POST["zipcode"])) {
-        $zipCodeErr = "";
+        $zipCodeErr = "zipcode is required";
     } else {
         $zipCode = test_input($_POST["zipcode"]);
+        if (is_numeric($zipCode)) {
+            $zipCodeErr = "Please enter only numbers.";
+        }
     }
 
     if (empty($_POST["city"])) {
