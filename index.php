@@ -32,12 +32,13 @@ function whatIsHappening()
     echo '<h2>$_SESSION</h2>';
     var_dump($_SESSION);
 }
+
 whatIsHappening();
 
 //e-mail validation
 
 // define variables and set to empty values
-$email = $street = $streetNumber = $zipCode = $city = "";
+$email = $street = $streetNumber = $zipCode = $city = $expressDelivery = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = test_input($_POST["email"]);
@@ -45,6 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $streetNumber = test_input($_POST["streetnumber"]);
     $zipCode = test_input($_POST["zipcode"]);
     $city = test_input($_POST["city"]);
+    $expressDelivery = test_input($_POST["express_delivery"]);
 }
 function test_input($data)
 {
@@ -104,26 +106,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $city = test_input($_POST["city"]);
     }
 }
-$expressDelivery = ["express_delivery"];
 
-if (empty($_POST["express_delivery"])) {
-    $ordermessage = "Your order has been sent and will be delivered within 2 hours";
-
-} else {
-//($streetErr && $emailErr && $streetNumberErr && $zipCodeErr && $cityErr && $expressDelivery);
-$ordermessage = "Your order has been sent and will be delivered within 45 minutes";
+if (empty($streetErr && $emailErr && $streetNumberErr && $zipCodeErr && $cityErr)) {
+    $ordermessage = "";
 }
+elseif (empty($_POST["express_delivery"]) && (empty($streetErr && $emailErr && $streetNumberErr && $zipCodeErr && $cityErr)){
+    $ordermessage = "Your order has been sent and will be delivered within 2 hours"
+        //todo sicco zegt hier eens te controleren, en de post in een variable steken en controleren eerst
+    });
+else {
+    $ordermessage = "Your order has been sent and will be delivered within 45 minutes";
+    //todo deze else is prima maar kan mss vanboven komen als er niets fout is EN spoed levering
+}
+/*$ordermessage = "";
+if (empty($streetErr && $emailErr && $streetNumberErr && $zipCodeErr && $cityErr)) {
+$ordermessage = "Your order has been sent";*/
 
-/*if (empty($_POST["gender"])) {
-    $genderErr = "Gender is required";
-} else {
-    $gender = test_input($_POST["gender"]);
-}*/
 //todo not working correct fix it with debugger
 //todo your products with their price.
 
-
-if ($_GET==[]){
+if ($_GET == []) {
     $products = [
         ['name' => 'Club Ham', 'price' => 3.20],
         ['name' => 'Club Cheese', 'price' => 3],
@@ -131,8 +133,7 @@ if ($_GET==[]){
         ['name' => 'Club Chicken', 'price' => 4],
         ['name' => 'Club Salmon', 'price' => 5]
     ];
-}
-else if ($_GET["food"]=="1") {
+} else if ($_GET["food"] == "1") {
     $products = [
         ['name' => 'Club Ham', 'price' => 3.20],
         ['name' => 'Club Cheese', 'price' => 3],
