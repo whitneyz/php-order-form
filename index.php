@@ -104,10 +104,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $city = test_input($_POST["city"]);
     }
 }
-$ordermessage = "";
-if (empty($streetErr && $emailErr && $streetNumberErr && $zipCodeErr && $cityErr)) {
-    $ordermessage = "Your order has been sent";
-} //todo not working correct fix it with debugger
+$expressDelivery = ["express_delivery"];
+
+if (empty($_POST["express_delivery"])) {
+    $ordermessage = "Your order has been sent and will be delivered within 2 hours";
+
+} else {
+//($streetErr && $emailErr && $streetNumberErr && $zipCodeErr && $cityErr && $expressDelivery);
+$ordermessage = "Your order has been sent and will be delivered within 45 minutes";
+}
+
+/*if (empty($_POST["gender"])) {
+    $genderErr = "Gender is required";
+} else {
+    $gender = test_input($_POST["gender"]);
+}*/
+//todo not working correct fix it with debugger
 //todo your products with their price.
 
 
@@ -136,12 +148,9 @@ else if ($_GET["food"]=="1") {
         ['name' => 'Ice-tea', 'price' => 3],
     ];
 }
-// todo difference between food and drinks
 
 $totalValue = 0;
 
-
-// todo Set session variables new page?? don't forget session function above page (is it correct?????)
 $_SESSION["street"] = "";
 $_SESSION["streetnumber"] = "";
 $_SESSION["zipcode"] = "";

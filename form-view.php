@@ -22,6 +22,7 @@
             </li>
         </ul>
     </nav>
+    <h5><?php echo $ordermessage ?></h5>
     <form method="post">
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -43,7 +44,8 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="streetnumber">Street number:</label>
-                    <input type="text" id="streetnumber" name="streetnumber" value="<?php echo $streetNumber ?>" class="form-control">
+                    <input type="text" id="streetnumber" name="streetnumber" value="<?php echo $streetNumber ?>"
+                           class="form-control">
                     <?php echo $streetNumberErr ?>
                 </div>
             </div>
@@ -63,21 +65,22 @@
 
         <fieldset>
             <legend>Products</legend>
-            <?php foreach ($products AS $i => $product): ?>
+            <?php foreach ($products as $i => $product): ?>
                 <label>
-                    <input type="checkbox" value="1" name="products[<?php echo $i ?>]"/> <?php echo $product['name'] ?> -
-                    &euro; <?php echo number_format($product['price'], 2) ?></label><br />
+                    <input type="checkbox" value="1" name="products[<?php echo $i ?>]"/> <?php echo $product['name'] ?>
+                    -
+                    &euro; <?php echo number_format($product['price'], 2) ?></label><br/>
             <?php endforeach; ?>
         </fieldset>
-        
+
         <label>
-            <input type="checkbox" name="express_delivery" value="5" /> 
-            Express delivery (+ 5 EUR) 
+            <input type="checkbox" name="express_delivery" value="5"/>
+            Express delivery (+ 5 EUR)
         </label>
-            
+
         <button type="submit" class="btn btn-primary" value=" ">Order!</button>
     </form>
-    <h3><?php echo $ordermessage ?></h3>
+
 
     <footer>You already ordered <strong>&euro; <?php echo $totalValue ?></strong> in food and drinks.</footer>
 </div>
