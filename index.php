@@ -62,12 +62,6 @@ function test_input($data)
 $streetErr = $emailErr = $streetNumberErr = $zipCodeErr = $cityErr = "";
 $street = $email = $streetNumber = $zipCode = $city = "";
 
-$ordermessage = "Your order has been sent";
-if (empty($streetErr && $emailErr && $streetNumberErr && $zipCodeErr && $cityErr)) {
-    $ordermessage;
-} else {
-    "";
-}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["email"])) {
@@ -109,7 +103,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $city = test_input($_POST["city"]);
     }
 }
-
+$ordermessage = "";
+if (empty($streetErr && $emailErr && $streetNumberErr && $zipCodeErr && $cityErr)) {
+    $ordermessage = "Your order has been sent";
+} //todo not working correct fix it with debugger
 //your products with their price.
 $products = [
     ['name' => 'Club Ham', 'price' => 3.20],
