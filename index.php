@@ -62,6 +62,13 @@ function test_input($data)
 $streetErr = $emailErr = $streetNumberErr = $zipCodeErr = $cityErr = "";
 $street = $email = $streetNumber = $zipCode = $city = "";
 
+$ordermessage = "Your order has been sent";
+if (empty($streetErr && $emailErr && $streetNumberErr && $zipCodeErr && $cityErr)) {
+    $ordermessage;
+} else {
+    "";
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["email"])) {
         $emailErr = "email is required";
@@ -103,9 +110,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-
-
-
 //your products with their price.
 $products = [
     ['name' => 'Club Ham', 'price' => 3.20],
@@ -126,7 +130,7 @@ $products = [
 $totalValue = 0;
 
 
-// todo Set session variables new page?? don't forget session function above page
+// todo Set session variables new page?? don't forget session function above page (is it correct?????)
 $_SESSION["street"] = "";
 $_SESSION["streetnumber"] = "";
 $_SESSION["zipcode"] = "";
