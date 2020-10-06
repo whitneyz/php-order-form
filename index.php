@@ -110,7 +110,17 @@ if (empty($streetErr && $emailErr && $streetNumberErr && $zipCodeErr && $cityErr
 } //todo not working correct fix it with debugger
 //todo your products with their price.
 
-if ($_GET["food"]=="1") {
+
+if ($_GET==[]){
+    $products = [
+        ['name' => 'Club Ham', 'price' => 3.20],
+        ['name' => 'Club Cheese', 'price' => 3],
+        ['name' => 'Club Cheese & Ham', 'price' => 4],
+        ['name' => 'Club Chicken', 'price' => 4],
+        ['name' => 'Club Salmon', 'price' => 5]
+    ];
+}
+else if ($_GET["food"]=="1") {
     $products = [
         ['name' => 'Club Ham', 'price' => 3.20],
         ['name' => 'Club Cheese', 'price' => 3],
