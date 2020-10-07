@@ -78,15 +78,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }// in form-view automatically the email error message what is applicable
     }
 
+
+
     if (empty($_POST["street"])) {
         $streetErr = "street is required";
     } else {
         $street = test_input($_POST["street"]);
         if (!preg_match("/^[a-zA-Z-' ]*$/", $street)) {
             $streetErr = "Only letters and white space allowed";
+        } else {
+            $_SESSION["street"] = $street;
         }
     }
-
     if (empty($_POST["streetnumber"])) {
         $streetNumberErr = "streetnumber is required";
     } else {
@@ -164,29 +167,24 @@ if ($_GET == []) {
 }
 
 
-
 if (isset($_POST["products"])) {// zien of de array products bestaat
     $food = $_POST["products"];
     $c = count($products);
     $totalValue = 0;
 
-    for ($i=0; $i<$c; $i++){
+    for ($i = 0; $i < $c; $i++) {
         if (isset($food[$i])) { //check of de producten in array set zijn
-            $totalValue = $totalValue + ($food[$i]["price"]);
-            echo "you have selected a Club Ham";
+            $totalValue = $totalValue + $products[$i]["price"];
+            echo "you have selected a " . $products[$i]["name"];
         }
     }
     //price should be printed outside
-}
-else{
+} else {
     echo "please choose your sandwich or drink";
 }
 /* "products[<?php echo $i ?>]"*/
 
 
-
-
-$_SESSION["street"] = "";
 $_SESSION["streetnumber"] = "";
 $_SESSION["zipcode"] = "";
 $_SESSION["city"] = "";
