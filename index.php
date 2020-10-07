@@ -39,6 +39,7 @@ whatIsHappening();
 
 // define variables and set to empty values
 $email = $street = $streetNumber = $zipCode = $city = $expressDelivery = "";
+$totalValue = 0;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = test_input($_POST["email"]);
@@ -138,7 +139,7 @@ if (empty($expressDelivery) && empty($streetErr) && empty($emailErr) && empty($s
 }
 
 if ($_GET == []) {
-    $products = [
+    $products = [//lentgh of this array needed for calculation
         ['name' => 'Club Ham', 'price' => 3.20],
         ['name' => 'Club Cheese', 'price' => 3],
         ['name' => 'Club Cheese & Ham', 'price' => 4],
@@ -163,19 +164,33 @@ if ($_GET == []) {
 }
 
 
-/*or
-if (isset($_GET["name"] ))
-    $food = $_GET==["name" =="0"];
-*/
-$totalValue = 0;
 
-//todo sum of products checkbox on tick of the checkbox
+if (isset($_POST["products"])) {// zien of de array products bestaat
+    $food = $_POST["products"];
+    $c = count($products);
+    $totalValue = 0;
+
+    for ($i=0; $i<$c; $i++){
+        if (isset($food[$i])) { //check of de producten in array set zijn
+            $totalValue = $totalValue + ($food[$i]["price"]);
+            echo "you have selected a Club Ham";
+        }
+    }
+    //price should be printed outside
+}
+else{
+    echo "please choose your sandwich or drink";
+}
+/* "products[<?php echo $i ?>]"*/
+
+
+
 
 $_SESSION["street"] = "";
 $_SESSION["streetnumber"] = "";
 $_SESSION["zipcode"] = "";
 $_SESSION["city"] = "";
-//$_SESSION["express_delivery"] = "";
+$_SESSION["express_delivery"] = "";
 //echo "Session variables are set.";
 
 
