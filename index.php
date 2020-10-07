@@ -46,7 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $streetNumber = test_input($_POST["streetnumber"]);
     $zipCode = test_input($_POST["zipcode"]);
     $city = test_input($_POST["city"]);
-    $expressDelivery = test_input($_POST["express_delivery"]);
+    $expressDelivery = isset($_POST["express_delivery"]);//todo expressdelivery should be set even if you don't tick the box
+    //$expressDelivery = test_input($_POST["express_delivery"]); moet niet door test_input maar waarom niet (omdat het alleen een checkbox is)
 }
 function test_input($data)
 {
@@ -63,7 +64,7 @@ function test_input($data)
 <?php
 // define variables and set to empty values
 $streetErr = $emailErr = $streetNumberErr = $zipCodeErr = $cityErr = "";
-$street = $email = $streetNumber = $zipCode = $city = "";
+$street = $email = $streetNumber = $zipCode = $city = "";//should express_Delivery also be defined here???
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -107,24 +108,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-if (empty($streetErr && $emailErr && $streetNumberErr && $zipCodeErr && $cityErr)) {
-    $ordermessage = "";
-}
-elseif (empty($_POST["express_delivery"]) && (empty($streetErr && $emailErr && $streetNumberErr && $zipCodeErr && $cityErr)){
-    $ordermessage = "Your order has been sent and will be delivered within 2 hours"
-        //todo sicco zegt hier eens te controleren, en de post in een variable steken en controleren eerst
-    });
-else {
+/*if (empty($streetErr && $emailErr && $streetNumberErr && $zipCodeErr && $cityErr)) && {
+$ordermessage = "Your order has been sent and will be delivered within 2 hours";
+    //todo sicco zegt hier eens te controleren, en de post in een variable steken en controleren eerst
+} else {
     $ordermessage = "Your order has been sent and will be delivered within 45 minutes";
     //todo deze else is prima maar kan mss vanboven komen als er niets fout is EN spoed levering
-}
+}*/
+
 /*$ordermessage = "";
 if (empty($streetErr && $emailErr && $streetNumberErr && $zipCodeErr && $cityErr)) {
 $ordermessage = "Your order has been sent";*/
-
+// todo it works but not so well don't know anymore what the problem is
 //todo not working correct fix it with debugger
-//todo your products with their price.
 
+
+if (empty($expressDelivery) && empty($streetErr) && empty($emailErr) && empty($streetNumberErr) && empty($zipCodeErr) && empty($cityErr)) {
+    $ordermessage = "Your order has been sent and will be delivered within 2 hours";
+}else{
+    $ordermessage = "Your order has been sent and will be delivered within 45 min";
+}
 if ($_GET == []) {
     $products = [
         ['name' => 'Club Ham', 'price' => 3.20],
@@ -152,10 +155,13 @@ if ($_GET == []) {
 
 $totalValue = 0;
 
+//todo sum of products checkbox
+
 $_SESSION["street"] = "";
 $_SESSION["streetnumber"] = "";
 $_SESSION["zipcode"] = "";
 $_SESSION["city"] = "";
+//$_SESSION["express_delivery"] = "";
 //echo "Session variables are set.";
 
 
