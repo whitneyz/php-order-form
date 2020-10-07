@@ -81,6 +81,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $streetErr = "street is required";
     } else {
         $street = test_input($_POST["street"]);
+        if (!preg_match("/^[a-zA-Z-' ]*$/", $street)) {
+            $streetErr = "Only letters and white space allowed";
+        }
     }
 
     if (empty($_POST["streetnumber"])) {
@@ -88,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $streetNumber = test_input($_POST["streetnumber"]);
         if (!filter_var($streetNumber, FILTER_VALIDATE_INT)) {
-            $streetNumberErr = "Please enter only numbers.";
+            $streetNumberErr = "Only numbers allowed";
         }
     }
 
@@ -97,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $zipCode = test_input($_POST["zipcode"]);
         if (!filter_var($zipCode, FILTER_VALIDATE_INT)) {
-            $zipCodeErr = "Please enter only numbers.";
+            $zipCodeErr = "Only numbers allowed";
         }
     }
 
@@ -105,6 +108,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $cityErr = "city is required";
     } else {
         $city = test_input($_POST["city"]);
+        if (!preg_match("/^[a-zA-Z-' ]*$/", $city)) {
+            $cityErr = "Only letters and white space allowed";
+        }
     }
 }
 
@@ -125,9 +131,12 @@ $ordermessage = "Your order has been sent";*/
 
 if (empty($expressDelivery) && empty($streetErr) && empty($emailErr) && empty($streetNumberErr) && empty($zipCodeErr) && empty($cityErr)) {
     $ordermessage = "Your order has been sent and will be delivered within 2 hours";
-}else{
+} else if ($streetErr or $emailErr or $streetNumberErr or $zipCodeErr or $cityErr) {
+    $ordermessage = "Please fill in the order form correct";
+} else {
     $ordermessage = "Your order has been sent and will be delivered within 45 min";
 }
+
 if ($_GET == []) {
     $products = [
         ['name' => 'Club Ham', 'price' => 3.20],
@@ -153,9 +162,14 @@ if ($_GET == []) {
     ];
 }
 
+
+/*or
+if (isset($_GET["name"] ))
+    $food = $_GET==["name" =="0"];
+*/
 $totalValue = 0;
 
-//todo sum of products checkbox
+//todo sum of products checkbox on tick of the checkbox
 
 $_SESSION["street"] = "";
 $_SESSION["streetnumber"] = "";
