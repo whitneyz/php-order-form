@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $streetNumber = test_input($_POST["streetnumber"]);
     $zipCode = test_input($_POST["zipcode"]);
     $city = test_input($_POST["city"]);
-    $expressDelivery = isset($_POST["express_delivery"]);//todo expressdelivery should be set even if you don't tick the box
+    $expressDelivery = isset($_POST["express_delivery"]);// expressdelivery should be set even if you don't tick the box
     //$expressDelivery = test_input($_POST["express_delivery"]); moet niet door test_input maar waarom niet (omdat het alleen een checkbox is)
 }
 function test_input($data)
@@ -75,9 +75,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = test_input($_POST["email"]);
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $emailErr = "Invalid email format";
-        }// in form-view automatically the email error message what is applicable
+        }// in form-view automatically the applicable email error message appears
     }
-
 
 
     if (empty($_POST["street"])) {
@@ -96,6 +95,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $streetNumber = test_input($_POST["streetnumber"]);
         if (!filter_var($streetNumber, FILTER_VALIDATE_INT)) {
             $streetNumberErr = "Only numbers allowed";
+        } else {
+            $_SESSION["streetnumber"] = $streetNumber;
         }
     }
 
@@ -105,6 +106,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $zipCode = test_input($_POST["zipcode"]);
         if (!filter_var($zipCode, FILTER_VALIDATE_INT)) {
             $zipCodeErr = "Only numbers allowed";
+        } else {
+            $_SESSION["zipcode"] = $zipCode;
         }
     }
 
@@ -114,6 +117,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $city = test_input($_POST["city"]);
         if (!preg_match("/^[a-zA-Z-' ]*$/", $city)) {
             $cityErr = "Only letters and white space allowed";
+        } else {
+            $_SESSION["city"] = $city;
         }
     }
 }
@@ -175,19 +180,15 @@ if (isset($_POST["products"])) {// zien of de array products bestaat
     for ($i = 0; $i < $c; $i++) {
         if (isset($food[$i])) { //check of de producten in array set zijn
             $totalValue = $totalValue + $products[$i]["price"];
-            echo "you have selected a " . $products[$i]["name"];
+            //"you have selected a " . $products[$i]["name"]; todo use for email?
+        } if (isset($_POST["express_delivery"]) && (isset($food[$i]))) {
+            $totalValue = 5.0 + $totalValue;
         }
     }
-    //price should be printed outside
 } else {
-    echo "please choose your sandwich or drink";
+    //echo "please choose your sandwich or drink";
 }
-/* "products[<?php echo $i ?>]"*/
 
-
-$_SESSION["streetnumber"] = "";
-$_SESSION["zipcode"] = "";
-$_SESSION["city"] = "";
 $_SESSION["express_delivery"] = "";
 //echo "Session variables are set.";
 
