@@ -147,22 +147,22 @@ if (empty($expressDelivery) && empty($streetErr) && empty($emailErr) && empty($s
     $ordermessage = "Your order has been sent and will be delivered within 45 min";
 }
 
-if ($_GET == []) {
-    $products = [//lentgh of this array needed for calculation
+if ($_GET == [] || $_GET["food"] == "1")   {// for homepage default with sandwiches or when you click the order food link
+    $products = [//length of this array needed for calculation total food price
         ['name' => 'Club Ham', 'price' => 3.20],
         ['name' => 'Club Cheese', 'price' => 3],
         ['name' => 'Club Cheese & Ham', 'price' => 4],
         ['name' => 'Club Chicken', 'price' => 4],
         ['name' => 'Club Salmon', 'price' => 5]
     ];
-} else if ($_GET["food"] == "1") {
+/*} else if ($_GET["food"] == "1") {
     $products = [
         ['name' => 'Club Ham', 'price' => 3.20],
         ['name' => 'Club Cheese', 'price' => 3],
         ['name' => 'Club Cheese & Ham', 'price' => 4],
         ['name' => 'Club Chicken', 'price' => 4],
         ['name' => 'Club Salmon', 'price' => 5]
-    ];
+    ];*/
 } else {
     $products = [
         ['name' => 'Cola', 'price' => 2],
