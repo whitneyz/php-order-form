@@ -79,6 +79,8 @@
         </label>
 
         <button type="submit" class="btn btn-primary" value=" ">Order!</button>
+        <br>
+        <h6>Your order € <strong> <?php echo $totalValueNow; ?></strong></h6>
     </form>
 
 

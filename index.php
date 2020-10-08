@@ -40,6 +40,7 @@ whatIsHappening();
 // define variables and set to empty values
 $email = $street = $streetNumber = $zipCode = $city = $expressDelivery = "";
 $totalValue = 0;
+$totalValueNow = 0;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = test_input($_POST["email"]);
@@ -176,22 +177,22 @@ if (isset($_POST["products"])) {// zien of de array products bestaat
     $food = $_POST["products"];
     $c = count($products);
     $totalValue = 0;
+    $totalValueNow = 0;
+
 
     for ($i = 0; $i < $c; $i++) {
         if (isset($food[$i])) { //check of de producten in array set zijn
-            $totalValue = $totalValue + $products[$i]["price"];
+            $totalValueNow = $totalValueNow + $products[$i]["price"];
             //"you have selected a " . $products[$i]["name"]; todo use for email?
-        } if (isset($_POST["express_delivery"]) && (isset($food[$i]))) {
-            $totalValue = 5.0 + $totalValue;
         }
     }
-} else {
-    //echo "please choose your sandwich or drink";
+
+    if (isset($_POST["express_delivery"]) ) {
+        $totalValueNow = 5.0 + $totalValueNow;
+        $_SESSION["price"] = $totalValueNow;
+//echo "please choose your sandwich or drink";
+    }
 }
-
-$_SESSION["express_delivery"] = "";
-//echo "Session variables are set.";
-
 
 /* Both GET and POST create an array (e.g. array( key1 => value1, key2 => value2, key3 => value3, ...)). This array
 holds key/value pairs,
