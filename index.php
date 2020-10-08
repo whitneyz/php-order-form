@@ -41,6 +41,7 @@ whatIsHappening();
 $email = $street = $streetNumber = $zipCode = $city = $expressDelivery = "";
 $totalValue = 0;
 $totalValueNow = 0;
+date_default_timezone_set("Europe/Brussels");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = test_input($_POST["email"]);
@@ -135,12 +136,16 @@ $ordermessage = "Your order has been sent and will be delivered within 2 hours";
 /*$ordermessage = "";
 if (empty($streetErr && $emailErr && $streetNumberErr && $zipCodeErr && $cityErr)) {
 $ordermessage = "Your order has been sent";*/
-// todo it works but not so well don't know anymore what the problem is
-//todo not working correct fix it with debugger
+
+
+//code to show the delivery time
+//todo add code with DATE? so you can see the accurate delivery time
 
 
 if (empty($expressDelivery) && empty($streetErr) && empty($emailErr) && empty($streetNumberErr) && empty($zipCodeErr) && empty($cityErr)) {
     $ordermessage = "Your order has been sent and will be delivered within 2 hours";
+    //todo should be time + 2hours
+    $ordermessage = "The delivery time is " . date("h:i:");
 } else if ($streetErr or $emailErr or $streetNumberErr or $zipCodeErr or $cityErr) {
     $ordermessage = "Please fill in the order form correct";
 } else {
@@ -155,7 +160,7 @@ if ($_GET == [] || $_GET["food"] == "1")   {// for homepage default with sandwic
         ['name' => 'Club Chicken', 'price' => 4],
         ['name' => 'Club Salmon', 'price' => 5]
     ];
-/*} else if ($_GET["food"] == "1") {
+/*} else if ($_GET["food"] == "1") {// can remove it because it's double code correct is below and above
     $products = [
         ['name' => 'Club Ham', 'price' => 3.20],
         ['name' => 'Club Cheese', 'price' => 3],
